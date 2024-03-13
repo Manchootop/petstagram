@@ -6,8 +6,7 @@ SECRET_KEY = 'django-insecure-_k%a@&mg$y2yf^l+3qtg8#_8rmvc6d*&$%t9^yk7r22kk$j7(l
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -82,6 +81,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+if DEBUG:
+    AUTH_PASSWORD_VALIDATORS = ()
 
 LANGUAGE_CODE = 'en-us'
 

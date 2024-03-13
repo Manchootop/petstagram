@@ -1,5 +1,5 @@
 from django.db import models
-from django.template.defaultfilters import slugify
+from django.utils.text import slugify
 
 
 class Pet(models.Model):
@@ -11,7 +11,7 @@ class Pet(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if not self.slug:
-            self.slug = slugify(f'{self.name}={self.id}')
+            self.slug = slugify(f'{self.name}-{self.pk}')
         return super().save(*args, **kwargs)
 
     def __str__(self):
