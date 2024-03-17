@@ -32,3 +32,7 @@ class Photo(models.Model):
     )
     tagged_pets = models.ManyToManyField(Pet, blank=True)
     date_of_publication = models.DateField(auto_now=True)
+
+    @property
+    def photo_count(self):
+        return self.photolike_set.count()

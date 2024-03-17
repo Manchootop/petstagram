@@ -9,6 +9,10 @@ class Comment(models.Model):
     to_photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
 
 
-class Like(models.Model):
-    to_photo = models.ForeignKey(Photo, on_delete=models.CASCADE)
-
+class PhotoLike(models.Model):
+    pet_photo = models.ForeignKey(
+        Photo,
+        on_delete=models.DO_NOTHING
+    )
+# photo_like = PhotoLike.objects \
+#     .filter(pet_photo_id=pet_photo.pk, user=request.user)

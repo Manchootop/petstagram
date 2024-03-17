@@ -5,7 +5,7 @@ urlpatterns = [
     path('add/', views.create_pet, name='create pet'),
     path('', views.create_pet, name='create pet'),
     # path(include('<str:username>/pet/<slug:pet slug>/')),
-    path('<str:username>/pet/<slug:pet_slug>/',
+        path('<str:username>/pet/<slug:pet_slug>/',
          include([
              path('', views.details_pet, name='details pet'),
              path('edit/', views.edit_pet, name='edit pet'),
