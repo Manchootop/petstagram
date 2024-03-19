@@ -8,7 +8,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 INSTALLED_APPS = [
     # Django apps
     'django.contrib.admin',
@@ -66,7 +65,6 @@ DATABASES = {
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -99,5 +97,8 @@ STATICFILES_DIRS = (
     BASE_DIR / 'staticfiles',
 )
 
+MEDIA_ROOT = BASE_DIR / 'mediafiles'
+
+MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

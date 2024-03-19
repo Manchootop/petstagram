@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from petstagram.common.models import Comment, PhotoLike
+from petstagram.common.models import PhotoLike, PhotoComment
 
 
-@admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
-    ordering = ('to_photo', 'date_time_of_publication', 'text')
+@admin.register(PhotoComment)
+class PhotoCommentAdmin(admin.ModelAdmin):
+    ordering = ('pet_photo', 'created_at', 'text')
 
 
 @admin.register(PhotoLike)

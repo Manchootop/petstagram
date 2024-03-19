@@ -4,8 +4,58 @@
     <div class="container">
         <div class="col-9">
 
-        {% include 'partials/pet_photo_list_item.html' with photo=pet_photo %}
+            {% include 'partials/pet_photo_list_item.html' with photo=pet_photo %}
+
+            <p class="pet-details">{{ pet_photo.description }}</p>
+
+            <!-- Date of Publication or edit of the Photo -->
+            <h5 class="postTime">{{ pet_photo.date_of_publication|date:'d/m/Y' }}</h5>
+
+            <!-- Start Comments Section -->
+            <div class="comments">
+                {% for comment in pet_photo.photocomment_set.all %}
+                <div class="top">
+                    <div class="userDetails">
+                        <div class="comment-data">
+                            <div class="profilepic">
+                                <div class="profile_img">
+                                    <div class="image">
+                                        <!-- User Profile Image -->
+                                        <img src="{% static 'images/person.png' %}" alt="img8">
+                                    </div>
+                                </div>
+                            </div>
+                            <p>
+                                <!-- Link to User Profile Details Page-->
+                                <!-- User First and/or Last Name or username-->
+                                <a href="{% url 'details profile' pk=1 %}">Steven Ivanov</a>
+                                <!-- User Comment -->
+                                - {{ comment.text }}
+                            </p>
+                        </div>
+                        <span>{{ comment.created_at }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <!-- End Comments Section -->
+        </div>
+
+        <!-- Start Add Comments Section -->
+        <div class="addComments">
+
+            <!-- Start Add Comments Form -->
+            <form method="post" action="#">
+                <label for="id_body">Body:</label>
+                <textarea name="body" cols="40" rows="10" placeholder="Add comment..." maxlength="300"
+                          required="" id="id_body"></textarea>
+                <!-- Post Comments Button -->
+                <button type="submit">Post</button>
+            </form>
+            <!-- End Add Comments Form -->
 
         </div>
+        <!-- End Add Comments Section -->
+    </div>
     </div>
 {% endblock %}
