@@ -1,5 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
+
+from petstagram.core.form_mixins import ReadOnlyFieldsFormMixin
 from petstagram.pets.models import Pet
 
 
@@ -27,10 +29,13 @@ class PetCreateForm(PetBaseForm):
     pass
 
 
-class PetEditForm(PetBaseForm):
+class PetEditForm(ReadOnlyFieldsFormMixin, PetBaseForm):
+    readonly_fields = ("date_of_birth",)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['date_of_birth'].widget.attrs['readonly'] = 'readonly'
+        self._apply_readonly_on_fields()
 
     def clean_date_of_birth(self):
         # date_of_birth = self.cleaned_data['date_of_birth']
@@ -42,16 +47,8 @@ class PetEditForm(PetBaseForm):
         return self.instance.date_of_birth
 
 
-class ReadOnlyFieldsFormMixin:
-    readonly_fields = ()
-
-    def _apply_readonly_on_fields(self):
-        for name, field in self.fields.items():
-            field.widget.attrs["readonly"] = 'readonly'
-
-
 class PetDeleteForm(ReadOnlyFieldsFormMixin, PetBaseForm):
-    readonly_fields = ('date_of_birth')
+    readonly_fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
