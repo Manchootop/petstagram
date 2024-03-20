@@ -5,20 +5,6 @@ from django.views import generic as views
 from petstagram.pets.forms import PetCreateForm, PetEditForm, PetDeleteForm
 from petstagram.pets.models import Pet
 
-
-# def create_pet(request):
-#     pet_form = PetCreateForm(request.POST or None)
-#
-#     if request.method == 'POST':
-#         if pet_form.is_valid():
-#             created_pet = pet_form.save()
-#             return redirect('details pet', username='lubo', pet_slug=created_pet.slug)
-#     context = {
-#         'pet_form': pet_form,
-#     }
-#
-#     return render(request, 'pets/create_pet.html', context)
-
 class PetCreateView(views.CreateView):
     model = Pet
     # fields = ['name', 'date_of_birth', 'personal_photo']
@@ -32,32 +18,36 @@ class PetCreateView(views.CreateView):
         })
 
 
-def edit_pet(request, username, pet_slug):
-    pet = Pet.objects.filter(slug=pet_slug) \
-        .get()
+# def edit_pet(request, username, pet_slug):
+#     pet = Pet.objects.filter(slug=pet_slug) \
+#         .get()
+#
+#     pet_form = PetEditForm(request.POST or None, instance=pet)
+#
+#     if request.method == 'POST':
+#         if pet_form.is_valid():
+#             pet_form.save()
+#             return redirect('details pet', username=username, pet_slug=pet_slug)
+#
+#     context = {
+#         'pet_form': pet_form,
+#         'username': username,
+#         'pet': pet,
+#     }
+#
+#     return render(request, 'pets/edit_pet.html', context)
 
-    pet_form = PetEditForm(request.POST or None, instance=pet)
+class PetUpdateView(views.UpdateView):
+    model = Pet
+    form_class = PetEditForm
+    template_name = 'pets/edit_pet.html'
 
-    if request.method == 'POST':
-        if pet_form.is_valid():
-            pet_form.save()
-            return redirect('details pet', username=username, pet_slug=pet_slug)
+    slug_url_kwarg = 'pet_slug'
 
-    context = {
-        'pet_form': pet_form,
-        'username': username,
-        'pet': pet,
-    }
-
-    return render(request, 'pets/edit_pet.html', context)
-
-
-def details_pet(request, username, pet_slug):
-    context = {
-        'object': Pet.objects.get(slug=pet_slug)
-    }
-
-    return render(request, 'pets/details_pet.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['username'] = 'lubo'
+        return context
 
 
 class PetDetailView(views.DetailView):

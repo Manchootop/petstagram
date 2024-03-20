@@ -8,7 +8,7 @@ urlpatterns = [
         path('<str:username>/pet/<slug:pet_slug>/',
          include([
              path('', views.PetDetailView.as_view(), name='details pet'),
-             path('edit/', views.edit_pet, name='edit pet'),
+             path('edit/', views.PetUpdateView.as_view(), name='edit pet'),
              path('delete/', views.delete_pet, name='delete pet'),
                 ]),
          ),
